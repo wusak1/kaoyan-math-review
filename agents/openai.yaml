@@ -1,0 +1,6 @@
+interface:
+  display_name: "考研数学批改与复盘"
+  short_description: "按 v2.8 左页诊断重做、右页分层详解与双端主动提取批改整卷"
+  default_prompt: "请用 $kaoyan-math-review 批改附件中的考研数学试卷，生成复盘 PDF 和 Obsidian Markdown。"
+policy:
+  allow_implicit_invocation: true

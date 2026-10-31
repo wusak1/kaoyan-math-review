@@ -1,0 +1,90 @@
+/* Mathematics review layout v2.8: spread and active recall. */
+@page { size: A4 portrait; margin: 17.5mm 17.5mm 18mm; }
+:root {
+ --text-main:#111111; --text-muted:#475569; --accent-heading:#1a365d; --annot-color:#b91c1c;
+ --border-strong:#1e293b; --border-light:#cbd5e1; --bg-table-head:#f8fafc;
+ --font-serif:"Noto Serif CJK SC","Source Han Serif SC","Songti SC","SimSun",serif;
+ --font-sans:"Microsoft YaHei","Noto Sans CJK SC","SimHei",sans-serif;
+}
+* { box-sizing:border-box; }
+html { background:#e9edf1; }
+body { max-width:210mm; margin:24px auto; padding:17.5mm 17.5mm 18mm; background:white; color:var(--text-main); font:11pt/1.65 var(--font-serif); text-align:left; }
+h1,h2,h3,h4 { font-family:var(--font-sans); line-height:1.35; break-after:avoid; }
+h1 { font-size:20pt; color:var(--accent-heading); margin:0 0 3mm; }
+h2 { font-size:15pt; color:var(--accent-heading); margin:9mm 0 3.5mm; padding-bottom:1.5mm; border-bottom:.75pt solid var(--border-light); }
+h3 { font-size:12pt; margin:5mm 0 2mm; }
+h4 { font-size:11pt; margin:4mm 0 2mm; }
+p { margin:0 0 2.5mm; orphans:3; widows:3; }
+a { color:var(--accent-heading); text-decoration:underline; text-underline-offset:2px; overflow-wrap:anywhere; }
+a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid var(--accent-heading); outline-offset:3px; }
+.doc-header { border-bottom:1.5pt solid var(--border-strong); padding-bottom:3.5mm; margin-bottom:6mm; }
+.score-summary { margin:0; }
+.score-val { font-family:var(--font-sans); font-weight:700; color:var(--accent-heading); }
+.score-note,.meta,.source,figcaption,.figure-caption { font-size:9pt; line-height:1.45; color:var(--text-muted); }
+.meta { margin-bottom:5mm; }
+.source { margin-top:3mm; overflow-wrap:anywhere; }
+.math-lead,.math-note { font-family:var(--font-sans); font-weight:700; margin-right:.7em; }
+.note { margin:4mm 0; padding-left:4mm; border-left:1pt solid var(--border-light); }
+.math-block,.katex-display { margin:4mm 0; break-inside:avoid; }
+.katex { font-size:1.06em; }
+table { width:100%; border-collapse:collapse; margin:4mm 0 7mm; font-size:10pt; line-height:1.5; }
+th,td { padding:2.5mm 2mm; text-align:left; vertical-align:top; border-bottom:.5pt solid var(--border-light); }
+th { font-family:var(--font-sans); background:var(--bg-table-head); border-top:1.2pt solid var(--border-strong); border-bottom:.75pt solid var(--border-strong); }
+tbody tr:last-child td { border-bottom:1.2pt solid var(--border-strong); }
+thead { display:table-header-group; }
+tr { break-inside:avoid; }
+.summary-table { table-layout:fixed; }
+.summary-table th:nth-child(1) { width:9%; }
+.summary-table th:nth-child(2) { width:15%; }
+.summary-table th:nth-child(3) { width:60%; }
+.summary-table th:nth-child(4) { width:16%; }
+.summary-table td:first-child { font-family:var(--font-sans); font-weight:700; }
+.problem-statement { margin-bottom:3mm; }
+figure,.handwriting-group { margin:4mm 0; }
+figure { break-inside:avoid; }
+img { max-width:100%; height:auto; }
+figure img,.handwriting-canvas img { display:block; width:100%; height:auto; margin:auto; }
+.handwriting-canvas { position:relative; break-inside:avoid; }
+.annot-box { position:absolute; border:1.1pt dashed var(--annot-color); pointer-events:none; background:transparent; }
+.annot-callout { border-left:2.5pt solid #991b1b; padding-left:3mm; margin:2.5mm 0; }
+.alt-solution { margin-top:4mm; padding-top:2mm; border-top:.5pt dashed #cbd5e1; font-size:10pt; }
+p:has(.katex) { line-height:1.72; }
+.annot-tag { color:var(--annot-color); font-family:var(--font-sans); font-weight:700; }
+figcaption,.figure-caption { margin-top:2mm; }
+.workspace,.workspace-short { min-height:45mm; margin:4mm 0; }
+.workspace.redo { min-height:45mm; border:.5pt solid #cbd5e1; break-inside:avoid; }
+.workspace.long,.workspace-calc { min-height:85mm; margin:4mm 0; }
+ul,ol { padding-left:1.6em; }
+li { margin-bottom:2mm; }
+details { margin:4mm 0; }
+summary { cursor:pointer; font-family:var(--font-sans); }
+.preview-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:12px; margin:-10mm 0 8mm; background:#f1f5f9; font:13px/1.5 var(--font-sans); }
+.preview-toolbar button { color:var(--text-main); background:white; border:1px solid var(--border-light); padding:6px 10px; cursor:pointer; border-radius:3px; }
+.preview-toolbar button[aria-pressed="true"] { border-color:var(--accent-heading); font-weight:700; }
+@media screen {
+ body.reading-mode { max-width:960px; padding:36px 42px; }
+ body.grayscale-preview .document { filter:grayscale(1); }
+ .katex-display { overflow-x:auto; overflow-y:hidden; padding:2px 0; }
+}
+@media print {
+ /* Left diagnosis / standalone exercise / whole appendix; right solutions. */
+ .question,.exercise.standalone,.appendix { break-before:left; }
+ .question-solution-pane,.exercise-solutions-page { break-before:right; }
+ /* A shared exercise stays after the knowledge section; its answer turns one page. */
+ .exercise:not(.standalone) { break-before:auto; }
+ .exercise:not(.standalone) + .exercise-solutions-page { break-before:page; }
+ html { background:white; }
+ body,body.reading-mode { max-width:none; margin:0; padding:0; }
+ .preview-toolbar,.screen-only { display:none !important; }
+ .document { filter:none !important; }
+ a { color:inherit; }
+ th { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+ .katex-display { overflow:visible; }
+}
+@media screen and (max-width:700px) {
+ body,body.reading-mode { margin:0; padding:24px 18px; }
+ h1 { font-size:18pt; }
+ .preview-toolbar { margin:0 0 24px; }
+ th,td { padding:7px 4px; }
+ .summary-table { font-size:9.5pt; }
+}
